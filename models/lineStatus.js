@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 // schema for line objects
 const lineSchema = mongoose.Schema({
-    storeId: {type: mongoose.Schema.Types.ObjectId, ref: 'Store', required: false},
+    placeId: {type: String, required: false},
     weekday: {type: Number, required: false, min: 0, max: 6},
     hour: {type: Number, required: false, min: 0, max: 23}, 
     busy: {type: Number, required: true, min: 0, max: 3},

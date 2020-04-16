@@ -5,9 +5,11 @@ const Store = require('../models/store');
 
 // POST -> Line Status for a store
 exports.createLineStatus = async (req, res) => {
-    // Find the store related to the Store ID
-    Store.findOne({'_id': req.params.storeId})
+    // Find the store related to the Place ID
+    Store.findOne({'placeId': req.params.placeId})
         .then(store => {
+            // if store doesnt exist return error
+            if (store === null) return res.status(404).json({message: "Store doesn't exist", code: 404});
             // get the business level from the body of the request
             const busy = req.body.busy;
             // get the date and time for now
@@ -20,7 +22,7 @@ exports.createLineStatus = async (req, res) => {
             // set the parameters for the lineStatus object
             lineStatus.weekday = date.getDay();
             lineStatus.hour = date.getHours();
-            lineStatus.storeId = req.params.storeId;
+            lineStatus.placeId = req.params.placeId;
             lineStatus.busy = busy;
             lineStatus.date = `${year}-${month}-${day}`;
             // Save the lineStatus object in the database
@@ -29,7 +31,7 @@ exports.createLineStatus = async (req, res) => {
                 .catch(err => res.status(400).json(err));
         })
         // If any errors return the errors
-        .catch(err => res.status(400).json({message: 'Store not found', code: 400, error: err}));
+        .catch(err => res.status(404).json({message: 'Store not found', code: 404, error: err}));
 };
 
 
@@ -40,11 +42,13 @@ exports.getLineStatus = async (req, res) => {
     // convert the date into a date string
     const todayDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
     // Find the store by it's ID
-    Store.findOne({'_id': req.params.storeId})
+    Store.findOne({'placeId': req.params.placeId})
         // After the store is found get all of the line status for the store from today
         .then(store => {
+            // if store doesnt exist return error
+            if (store === null) return res.status(404).json({message: "Store doesn't exist", code: 404});
             // Find the line status corresponding with the store and today's date
-            LineStatus.find({'storeId': req.params.storeId, 'date': todayDate})
+            LineStatus.find({'placeId': req.params.placeId, 'date': todayDate})
                 // Once the results of the line statuses are found, find the average
                 // for each hour and return it
                 .then(results =>{
@@ -75,10 +79,10 @@ exports.getLineStatus = async (req, res) => {
                 .catch(err => res.status(400).json(err));
         })
         // If any errors return the errors
-        .catch(err => res.status(400).json({message: 'Store not found', code: 400, error: err}));
+        .catch(err => res.status(404).json({message: 'Store not found', code: 404, error: err}));
 };
 
-// TODO: Add validation
+
 // POST -> Get the line status of a weekday
 exports.lineStatusDay = async (req, res) => {
     // get current date
@@ -86,11 +90,13 @@ exports.lineStatusDay = async (req, res) => {
     // get the day of the week 0-6 (Sunday-Saturday)
     const weekday = req.params.day;
     // Find the store by it's ID
-    Store.findOne({'_id': req.params.storeId})
+    Store.findOne({'placeId': req.params.placeId})
         // After the store is found get all of the line status for the store for the weekday
         .then(store => {
+            // if store doesnt exist return error
+            if (store === null) return res.status(404).json({message: "Store doesn't exist", code: 404});
             // Find the line status corresponding with the store and today's date
-            LineStatus.find({'storeId': req.params.storeId, 'weekday': weekday})
+            LineStatus.find({'placeId': req.params.placeId, 'weekday': weekday})
                 // Once the results of the line statuses are found, find the average
                 // for each hour and return it
                 .then(results =>{
@@ -121,6 +127,5 @@ exports.lineStatusDay = async (req, res) => {
                 .catch(err => res.status(400).json(err));
         })
         // If any errors return the errors
-        .catch(err => res.status(400).json({message: 'Store not found', code: 400, error: err}));
-
+        .catch(err => res.status(404).json({message: 'Store not found', code: 404, error: err}));
 };

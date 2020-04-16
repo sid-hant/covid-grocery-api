@@ -3,18 +3,28 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "proxy": "http://localhost:5000",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "npm run start --prefix client",
+    "server": "nodemon index.js",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@googlemaps/google-maps-services-js": "^2.5.5",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
     "mongoose": "^5.9.9"
+  },
+  "devDependencies": {
+    "concurrently": "^5.1.0",
+    "nodemon": "^2.0.3"
   }
 }
