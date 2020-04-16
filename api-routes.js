@@ -31,6 +31,5 @@ router.route('/:placeId/seniorHours')
     .post(singleStoreController.seniorHours);
 
 
-
 // Export API routes
 module.exports = router;
