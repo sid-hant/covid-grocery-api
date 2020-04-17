@@ -80,7 +80,7 @@ exports.seniorHours = async (req, res) => {
     }
     // Validation
     // If any key names are missing
-    if (Object.keys(seniorHours).length === 0 || !exists || !hours) return res.status(400).json(errorMsg);
+    if (Object.keys(seniorHours).length === 0 || exists === null || !hours) return res.status(400).json({errorMsg});
     // if 'exists' is a boolean
     if (typeof exists != "boolean") return res.status(400).json(errorMsg);
     // check if all of the weekdays is in hours
