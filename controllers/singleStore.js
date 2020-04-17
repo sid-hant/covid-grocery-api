@@ -45,8 +45,12 @@ exports.storeInformation = async (req, res) => {
                         // save the store
                         store.save()
                     }
+                    // put the google API result into a variable
+                    let resultPlace = place.data.result;
+                    // add the seniorHours to the result
+                    resultPlace['seniorHours'] = store.seniorHours;
                     // return the store information
-                    return res.status(200).json({message: 'Store found', code: 200, store: place.data.result});
+                    return res.status(200).json({message: 'Store found', code: 200, store: resultPlace});
                 })
                 // Throw error if something goes wrong
                 .catch(err => res.status(400).json({message: 'Store was not found or created', code: 400, errors: err}));
