@@ -29,7 +29,7 @@ const port = process.env.PORT || 5000;
 const apiRoutes = require('./api-routes');
 
 // api routes
-app.use('/api', apiRoutes);
+app.use('/api/v1', apiRoutes);
 
 // launch api
 app.listen(port, () => {

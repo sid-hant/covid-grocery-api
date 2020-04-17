@@ -17,17 +17,17 @@ router.route('/store/:placeId')
 
 
 // /:placeId/line-status routes
-router.route('/:placeId/line-status')
+router.route('/store/:placeId/line-status')
     .post(lineStatusController.createLineStatus)   
     .get(lineStatusController.getLineStatus);
 
 
 // /:placeId/line-status/:day routes
-router.route('/:placeId/line-status/:day')
+router.route('/store/:placeId/line-status/:day')
     .get(lineStatusController.lineStatusDay);
 
 // /:placeId/seniorHours
-router.route('/:placeId/seniorHours')
+router.route('/store/:placeId/seniorHours')
     .post(singleStoreController.seniorHours);
 
 
