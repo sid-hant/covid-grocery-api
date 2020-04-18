@@ -27,7 +27,7 @@ router.route('/store/:placeId/line-status/:day')
     .get(lineStatusController.lineStatusDay);
 
 // /:placeId/seniorHours
-router.route('/store/:placeId/seniorHours')
+router.route('/store/:placeId/senior-hours')
     .post(singleStoreController.seniorHours);
 
 
